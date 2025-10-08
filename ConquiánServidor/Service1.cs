@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConquiánServidor.ConquiánDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -26,6 +27,23 @@ namespace ConquiánServidor
                 composite.StringValue += "Suffix";
             }
             return composite;
+        }
+
+        public bool RegisterPlayer(Player newPlayer)
+        {
+            try
+            {
+                using (var context = new ConquiánDBEntities())
+                {
+                    context.Player.Add(newPlayer);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
